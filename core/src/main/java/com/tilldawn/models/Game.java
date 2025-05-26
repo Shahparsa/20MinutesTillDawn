@@ -1,0 +1,115 @@
+package com.tilldawn.models;
+
+import com.tilldawn.models.Enemies.Enemy;
+import com.tilldawn.models.Weapon.Bullet;
+import com.tilldawn.models.Weapon.Weapon;
+
+import java.util.ArrayList;
+
+public class Game {
+    private Player player;
+    private Hero hero;
+    private Weapon weapon;
+
+    //Times
+    private final float fullTime;
+    private float realTime = 0;
+    private float tentacleMonsterTime = 0;
+    private float eyeBatMonsterTime = 0;
+    private float lastTimeDamage = 0;
+
+    // World things
+    private ArrayList<Enemy> enemies = new ArrayList<>();
+    private ArrayList<Bullet> bullets = new ArrayList<>();
+    private ArrayList<Coin> coins = new ArrayList<>();
+    private ArrayList<Bullet> deletedBullets = new ArrayList<>();
+
+    //Enemy
+    private int numberOfTree = 20;
+
+    //Aim
+    private boolean aimBot = false;
+
+    public Game(float time, Hero hero, Player player, Weapon weapon) {
+        this.fullTime = time;
+        this.hero = hero;
+        this.player = player;
+        this.weapon = weapon;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public Hero getHero() {
+        return hero;
+    }
+
+    public Weapon getWeapon() {
+        return weapon;
+    }
+
+    public float getRealTime() {
+        return realTime;
+    }
+
+    public ArrayList<Enemy> getEnemies() {
+        return enemies;
+    }
+
+    public ArrayList<Bullet> getBullets() {
+        return bullets;
+    }
+
+    public ArrayList<Coin> getCoins() {
+        return coins;
+    }
+
+    public int getNumberOfTree() {
+        return numberOfTree;
+    }
+
+    public float getFullTime() {
+        return fullTime;
+    }
+
+    public float getTentacleMonsterTime() {
+        return tentacleMonsterTime;
+    }
+
+    public float getEyeBatMonsterTime() {
+        return eyeBatMonsterTime;
+    }
+
+    public void setRealTime(float realTime) {
+        this.realTime = realTime;
+    }
+
+    public void setTentacleMonsterTime(float tentacleMonsterTime) {
+        this.tentacleMonsterTime = tentacleMonsterTime;
+    }
+
+    public void setEyeBatMonsterTime(float eyeBatMonsterTime) {
+        this.eyeBatMonsterTime = eyeBatMonsterTime;
+    }
+
+    public float getLastTimeDamage() {
+        return lastTimeDamage;
+    }
+
+    public ArrayList<Bullet> getDeletedBullets() {
+        return deletedBullets;
+    }
+
+    public void resetDeletedBullets() {
+        deletedBullets = new ArrayList<>();
+    }
+
+    public boolean isAimBot() {
+        return aimBot;
+    }
+
+    public void changeAimBot() {
+
+    }
+}
