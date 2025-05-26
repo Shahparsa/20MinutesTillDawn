@@ -29,9 +29,9 @@ public class App {
     private static int left = Input.Keys.A;
     private static int right = Input.Keys.D;
     private static int reload = Input.Keys.R;
-//    private static int shoot = Input.Buttons.LEFT + 1000;
-    private static int shoot = Input.Keys.P;
-    private static boolean isShootMouseButton = false;
+    private static int shoot = Input.Buttons.LEFT + 1000;
+//    private static int shoot = Input.Keys.P;
+    private static boolean isShootMouseButton = true;
     private static int cheatTime = Input.Keys.NUMPAD_1;
     private static int cheatAddLevel = Input.Keys.NUMPAD_2;
     private static int cheatAddHealth = Input.Keys.NUMPAD_3;

@@ -3,6 +3,7 @@ package com.tilldawn.models;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -17,6 +18,7 @@ public class GameAssetManager {
     private final String bullet = "Weapons/bullet.png";
     private final Texture backgroundTexture = new Texture("background.png");
     private static final ShaderProgram lightShader;
+    private static Animation<TextureRegion> explosionAnimation;
 
     static {
         String vertexShader = "attribute vec4 a_position;\n" +
@@ -45,6 +47,22 @@ public class GameAssetManager {
             "}";
 
         lightShader = new ShaderProgram(vertexShader, fragmentShader);
+        Texture frame1 = new Texture(Gdx.files.internal("Enemies/Explosion/ExplosionFX_0.png"));
+        Texture frame2 = new Texture(Gdx.files.internal("Enemies/Explosion/ExplosionFX_1.png"));
+        Texture frame3 = new Texture(Gdx.files.internal("Enemies/Explosion/ExplosionFX_2.png"));
+        Texture frame4 = new Texture(Gdx.files.internal("Enemies/Explosion/ExplosionFX_3.png"));
+        Texture frame5 = new Texture(Gdx.files.internal("Enemies/Explosion/ExplosionFX_4.png"));
+        Texture frame6 = new Texture(Gdx.files.internal("Enemies/Explosion/ExplosionFX_5.png"));
+        TextureRegion[] frames = new TextureRegion[] {
+            new TextureRegion(frame1),
+            new TextureRegion(frame2),
+            new TextureRegion(frame3),
+            new TextureRegion(frame4),
+            new TextureRegion(frame5),
+            new TextureRegion(frame6)
+        };
+        explosionAnimation = new Animation<>(0.1f, frames);
+
     }
 
     public Table tableMenu(Table table, Stage stage) {
@@ -98,5 +116,9 @@ public class GameAssetManager {
 
     public ShaderProgram getLightShader() {
         return lightShader;
+    }
+
+    public static Animation<TextureRegion> getExplosionAnimation() {
+        return explosionAnimation;
     }
 }

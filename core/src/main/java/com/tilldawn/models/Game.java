@@ -23,6 +23,8 @@ public class Game {
     private ArrayList<Bullet> bullets = new ArrayList<>();
     private ArrayList<Coin> coins = new ArrayList<>();
     private ArrayList<Bullet> deletedBullets = new ArrayList<>();
+    private ArrayList<Enemy> deletedEnemies = new ArrayList<>();
+    private ArrayList<Coin> deletedCoins = new ArrayList<>();
 
     //Enemy
     private int numberOfTree = 20;
@@ -110,6 +112,22 @@ public class Game {
     }
 
     public void changeAimBot() {
+        aimBot = !aimBot;
+    }
 
+    public ArrayList<Enemy> getDeletedEnemies() {
+        return deletedEnemies;
+    }
+
+    public ArrayList<Coin> getDeletedCoins() {
+        return deletedCoins;
+    }
+
+    public void resetDeletedEnemies() {
+        deletedEnemies = new ArrayList<>();
+    }
+
+    public void resetDeletedCoins() {
+        deletedCoins = new ArrayList<>();
     }
 }

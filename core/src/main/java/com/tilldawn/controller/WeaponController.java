@@ -77,8 +77,14 @@ public class WeaponController {
 
 
     private void handlePlayerInputs(Camera camera){
-        if (Gdx.input.isKeyPressed(App.getRealShoot())){
-            shoot(player , camera);
+        if(App.getShoot() >= 1000){
+            if(Gdx.input.isButtonPressed(App.getRealShoot())){
+                shoot(player , camera);
+            }
+        }else {
+            if (Gdx.input.isKeyPressed(App.getRealShoot())){
+                shoot(player , camera);
+            }
         }
         if(Gdx.input.isKeyPressed(App.getReload())){
             reload();

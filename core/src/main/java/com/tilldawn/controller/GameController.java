@@ -4,11 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.tilldawn.Main;
-import com.tilldawn.models.App;
+import com.tilldawn.models.*;
 import com.tilldawn.models.Enemies.Enemy;
-import com.tilldawn.models.Game;
-import com.tilldawn.models.GameAssetManager;
-import com.tilldawn.models.Player;
 import com.tilldawn.models.Weapon.Bullet;
 import com.tilldawn.models.enums.Abilities;
 import com.tilldawn.views.GameView;
@@ -19,6 +16,7 @@ public class GameController {
     private WeaponController weaponController;
     private PlayerController playerController;
     private BulletController bulletController;
+    private CoinController coinController;
     private MobController mobController;
 
     // Shade
@@ -30,6 +28,7 @@ public class GameController {
         playerController = new PlayerController(App.getCurrentGame().getPlayer());
         weaponController = new WeaponController(App.getCurrentGame().getWeapon() , player);
         bulletController = new BulletController();
+        coinController = new CoinController();
         mobController = new MobController();
     }
 
@@ -41,8 +40,15 @@ public class GameController {
 
     public void updateGame(float delta, Camera camera) {
         view.getHpLabel().setText("Hp : " + player.getHp() + "/" + player.getMaxHp());
-        view.getAmmoLabel().setText("Ammo : " + App.getCurrentGame().getWeapon().getAmmo() + "/" + App.getCurrentGame().getWeapon().getMaxAmmo());
-
+        view.getAmmoLabel().setText(App.getCurrentGame().getWeapon().getAmmo() + "/" + App.getCurrentGame().getWeapon().getMaxAmmo());
+        view.getKillLabel().setText("Kill: " + player.getKills());
+        view.getLevelLabel().setText("Level: " + player.getLevel());
+        float timeDiff = App.getCurrentGame().getFullTime() * 60 - App.getCurrentGame().getRealTime();
+        int minutes = (int) (timeDiff / 60);
+        int seconds = (int) (timeDiff % 60);
+        String formattedTime = String.format("Time: %02d:%02d", minutes, seconds);
+        view.getTimeLabel().setText(formattedTime);
+        view.getXpLevelProgressBar().setValue(player.getXp());
         updateBackGround();
 
         // Time
@@ -58,7 +64,9 @@ public class GameController {
         // Mob
         for(Enemy enemy : App.getCurrentGame().getEnemies()){
             mobController.update(delta , enemy);
+            mobController.checkCollide(enemy);
         }
+        deleteEnemies();
         if(App.getCurrentGame().getTentacleMonsterTime() > 3){
             for(int i = 0 ; i <= (int) App.getCurrentGame().getRealTime() / 30 ; i++){
                 mobController.createTentacleMonster();
@@ -75,11 +83,19 @@ public class GameController {
             }
         }
 
+        //Coin
+        for(Coin coin : App.getCurrentGame().getCoins()){
+            coinController.checkCollide(coin);
+            coinController.render(coin);
+        }
+        deleteCoins();
+
     }
 
     private void bulletUpdater(float delta) {
         for(Bullet bullet : App.getCurrentGame().getBullets()) {
             bulletController.update(bullet, delta);
+            bulletController.checkCollide(bullet);
         }
     }
 
@@ -90,7 +106,19 @@ public class GameController {
         App.getCurrentGame().resetDeletedBullets();
     }
 
+    private void deleteEnemies() {
+        for(Enemy enemy : App.getCurrentGame().getDeletedEnemies()) {
+            mobController.removeNow(enemy);
+        }
+        App.getCurrentGame().resetDeletedEnemies();
+    }
 
+    private void deleteCoins(){
+        for(Coin coin : App.getCurrentGame().getDeletedCoins()) {
+            coinController.removeNow(coin);
+        }
+        App.getCurrentGame().resetDeletedCoins();
+    }
 
     private void updateBackGround(){
 //        float backgroundY = Gdx.graphics.getHeight() / 2f ;

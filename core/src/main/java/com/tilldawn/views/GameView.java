@@ -17,8 +17,7 @@ import com.tilldawn.Main;
 import com.tilldawn.controller.GameController;
 import com.tilldawn.models.App;
 import com.tilldawn.models.Player;
-
-import javax.swing.text.StyledEditorKit;
+import com.tilldawn.models.Weapon.Bullet;
 
 public class GameView implements Screen, InputProcessor {
     private final OrthographicCamera camera;
@@ -29,8 +28,7 @@ public class GameView implements Screen, InputProcessor {
 
     private Texture glowTexture;
     private Sprite glowSprite;
-    private float glowScale = 1.5f;
-    private Color glowColor = new Color(1, 0.8f, 0.6f, 0.7f);
+    private Color glowColor;
 
     private final Label hpLabel;
     private final Label timeLabel;
@@ -41,7 +39,7 @@ public class GameView implements Screen, InputProcessor {
     private final Label fakeLabel;
     private final ProgressBar xpLevelProgressBar;
 
-    public GameView(GameController controller , Skin skin) {
+    public GameView(GameController controller, Skin skin) {
         this.controller = controller;
         controller.setPlayer(App.getCurrentGame().getPlayer());
         controller.setView(this);
@@ -51,21 +49,21 @@ public class GameView implements Screen, InputProcessor {
         Gdx.input.setInputProcessor(stage);
 
         hpLabel = new Label("HP: " + App.getCurrentGame().getPlayer().getHp(), skin);
-        timeLabel = new Label("Time: " + App.getCurrentGame().getRealTime(), skin);
+        timeLabel = new Label("Time: ", skin);
         levelLabel = new Label("Level: " + App.getCurrentGame().getPlayer().getLevel(), skin);
         xpLevelLabel = new Label("XP: " + App.getCurrentGame().getPlayer().getXp(), skin);
         killLabel = new Label("Kill: " + App.getCurrentGame().getPlayer().getKills(), skin);
-        ammoLabel = new Label("Ammo : " + App.getCurrentGame().getWeapon().getAmmo(), skin);
-        fakeLabel = new Label("" , skin);
+        ammoLabel = new Label("" + App.getCurrentGame().getWeapon().getAmmo(), skin);
+        fakeLabel = new Label("", skin);
         Player player = App.getCurrentGame().getPlayer();
-        xpLevelProgressBar = new ProgressBar(0 , player.getLevel() * 20 , 1 , false , skin);
+        xpLevelProgressBar = new ProgressBar(0, player.getLevel() * 20, 1, false, skin);
         xpLevelProgressBar.setColor(Color.GREEN);
 
         glowTexture = new Texture(Gdx.files.internal("hale.png"));
         glowSprite = new Sprite(new TextureRegion(glowTexture));
+        glowColor = new Color(glowSprite.getColor().r, glowSprite.getColor().g, glowSprite.getColor().b, 0.6f);
+        glowSprite.setOrigin(glowSprite.getWidth() / 2, glowSprite.getHeight() / 2);
 
-        // Center the glow sprite origin
-        glowSprite.setOrigin(glowSprite.getWidth()/2, glowSprite.getHeight()/2);
     }
 
     @Override
@@ -90,21 +88,22 @@ public class GameView implements Screen, InputProcessor {
         table.row();
         table.add(killLabel);
         table.row();
-        table.add(xpLevelLabel);
-        table.row();
-        table.add(ammoLabel);
+        Image ammo = new Image(Bullet.getTextureImage());
+        table.add(ammo).size(69, 85);
+        table.add(ammoLabel).padLeft(20);
         table.row();
 
-        xpTable.top();
         xpTable.setFillParent(true);
         xpTable.top();
 
         Stack progressStack = new Stack();
 
         levelLabel.setAlignment(Align.center);
+        xpLevelLabel.setAlignment(Align.right);
 
         progressStack.add(xpLevelProgressBar);
         progressStack.add(levelLabel);
+        progressStack.add(xpLevelLabel);
 
         xpTable.add(progressStack).width(Gdx.graphics.getWidth()).height(30).padTop(10);
 
@@ -124,18 +123,16 @@ public class GameView implements Screen, InputProcessor {
 
         Main.getBatch().begin();
 
-        controller.updateGame(delta , camera);
+        controller.updateGame(delta, camera);
         if (glowTexture != null) {
-            glowSprite.setPosition(
-                heroX - glowSprite.getWidth()/2,
-                heroY - glowSprite.getHeight()/2
-            );
-            glowSprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            glowSprite.setSize(Gdx.graphics.getWidth() + 100, Gdx.graphics.getHeight() + 100);
             glowSprite.setColor(glowColor);
+            glowSprite.setPosition(heroX - Gdx.graphics.getWidth() / 2f, heroY - Gdx.graphics.getHeight() / 2f);
             glowSprite.draw(Main.getBatch());
         }
         Main.getBatch().end();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.getBatch().setShader(Main.getBatch().getShader());
         stage.draw();
     }
 
@@ -233,4 +230,10 @@ public class GameView implements Screen, InputProcessor {
     public boolean scrolled(float amountX, float amountY) {
         return false;
     }
+
+    public ProgressBar getXpLevelProgressBar() {
+        return xpLevelProgressBar;
+    }
+
+
 }

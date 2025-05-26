@@ -12,6 +12,7 @@ import javax.swing.*;
 public class Bullet {
     private Texture texture = new Texture(GameAssetManager.getInstance().getBullet());
     private Sprite sprite = new Sprite(texture);
+    private static Texture textureImage = new Texture("Weapons/T_AmmoIcon.png");
     private CollisionRect collision;
     private int damage;
     private float posX;
@@ -19,6 +20,7 @@ public class Bullet {
     // Bullet vector
     private float deltaX = 1;
     private float deltaY = 1;
+    private boolean isAvailable = true;
 
     private boolean isFromPlayer;
 
@@ -112,5 +114,33 @@ public class Bullet {
 
     public void setDamage(int damage) {
         this.damage = damage;
+    }
+
+    public static Texture getTextureImage() {
+        return textureImage;
+    }
+
+    public void useBullet() {
+        isAvailable = false;
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public boolean isFromPlayer() {
+        return isFromPlayer;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public float getDeltaY() {
+        return deltaY;
+    }
+
+    public float getDeltaX() {
+        return deltaX;
     }
 }

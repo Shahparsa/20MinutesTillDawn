@@ -20,7 +20,7 @@ public class Player{
     private float y = Gdx.graphics.getHeight()/2f;
 
     private int Xp = 0;
-    private int level = 0;
+    private int level = 1;
 
 
     public Player(Hero hero , Weapon weapon){
@@ -39,7 +39,7 @@ public class Player{
 
     public boolean addXp(int xp){
         // If return true it means level up
-        int max = (level + 1) * 20;
+        int max = level * 20;
         Xp += xp;
         if (Xp >= max){
             level++;

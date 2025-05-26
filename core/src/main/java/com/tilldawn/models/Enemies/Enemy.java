@@ -5,21 +5,27 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tilldawn.models.CollisionRect;
+import com.tilldawn.models.GameAssetManager;
 
 public abstract class Enemy {
     protected Texture texture;
     protected Sprite sprite;
     protected Animation<TextureRegion> animation;
+    protected Animation<TextureRegion> explosionAnimation = GameAssetManager.getExplosionAnimation();
 
     protected float x;
     protected float y;
     protected boolean isFacingRight = true;
     protected float stateTime = 0;
+    protected float explosionTime = 0;
     protected float speed;
 
     protected int damage = 1;
     protected int hp;
     protected CollisionRect collisionRect;
+
+    protected boolean isDying = false;
+    protected boolean isDead = false;
 
     public Sprite getSprite() {
         return sprite;
@@ -99,5 +105,33 @@ public abstract class Enemy {
 
     public float getSpeed() {
         return speed;
+    }
+
+    public Animation<TextureRegion> getExplosionAnimation() {
+        return explosionAnimation;
+    }
+
+    public boolean isDying() {
+        return isDying;
+    }
+
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public void setDying(boolean dying) {
+        isDying = dying;
+    }
+
+    public void setDead(boolean dead) {
+        isDead = dead;
+    }
+
+    public float getExplosionTime() {
+        return explosionTime;
+    }
+
+    public void setExplosionTime(float explosionTime) {
+        this.explosionTime = explosionTime;
     }
 }
