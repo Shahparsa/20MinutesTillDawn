@@ -30,13 +30,13 @@ public class App {
     private static int right = Input.Keys.D;
     private static int reload = Input.Keys.R;
     private static int shoot = Input.Buttons.LEFT + 1000;
-//    private static int shoot = Input.Keys.P;
     private static boolean isShootMouseButton = true;
     private static int cheatTime = Input.Keys.NUMPAD_1;
     private static int cheatAddLevel = Input.Keys.NUMPAD_2;
     private static int cheatAddHealth = Input.Keys.NUMPAD_3;
     private static int cheatSpawnBoss = Input.Keys.NUMPAD_4;
     private static int cheatAddDamage = Input.Keys.NUMPAD_5;
+    private static int pauseMenu = Input.Keys.ESCAPE;
     //Hero selection
     private static HeroesType hero = null;
     // Shader
@@ -252,5 +252,10 @@ public class App {
     public static void setCurrentGame(Game currentGame) {
         App.currentGame = currentGame;
     }
+
+    public static int getPauseMenu() {
+        return pauseMenu;
+    }
+
 
 }

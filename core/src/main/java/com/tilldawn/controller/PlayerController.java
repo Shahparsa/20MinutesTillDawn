@@ -105,21 +105,24 @@ public class PlayerController {
             }
             player.updateRec();
         }
-        if (Gdx.input.isKeyPressed(App.getCheatAddDamage())) {
-            if (cheatAddDamageTime <= 0) {
+        if (Gdx.input.isKeyJustPressed(App.getCheatAddDamage())) {
+//            if (cheatAddDamageTime <= 0) {
                 App.getCurrentGame().getWeapon().setDamage(App.getCurrentGame().getWeapon().getDamage() + 1);
-                cheatAddDamageTime = 2f;
-            }
+//                cheatAddDamageTime = 2f;
+//            }
         }
 //        if(Gdx.input.isKeyPressed(App.getCheatAddHealth())){
 //            isMoving = false;
 //        }
-//        if(Gdx.input.isKeyPressed(App.getCheatAddLevel())){
-//            isMoving = false;
-//        }
-//        if(Gdx.input.isKeyPressed(App.getCheatTime())){
-//            isMoving = false;
-//        }
+        if(Gdx.input.isKeyJustPressed(App.getCheatAddLevel())){
+            int level = App.getCurrentGame().getPlayer().getLevel() * 20;
+            App.getCurrentGame().getPlayer().addXp(level);
+            isMoving = false;
+        }
+        if(Gdx.input.isKeyJustPressed(App.getCheatTime())){
+            App.getCurrentGame().setRealTime(App.getCurrentGame().getRealTime() + 60);
+            isMoving = false;
+        }
 //        if(Gdx.input.isKeyPressed(App.getCheatSpawnBoss())){
 //            isMoving = false;
 //        }

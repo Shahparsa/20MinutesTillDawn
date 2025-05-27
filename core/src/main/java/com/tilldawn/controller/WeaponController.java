@@ -102,16 +102,35 @@ public class WeaponController {
     public void shoot(Player player , Camera camera) {
         if(!isReloading && weapon.getAmmo() != 0 && timeLastShot <= 0){
             Vector3 mouseScreenPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-
             Vector3 mouseWorldPos = camera.unproject(mouseScreenPos);
 
-            float deltaX = mouseWorldPos.x - player.getX();
-            float deltaY = mouseWorldPos.y - player.getY();
+            float baseDeltaX = mouseWorldPos.x - player.getX();
+            float baseDeltaY = mouseWorldPos.y - player.getY();
 
-            float p = deltaX * deltaX + deltaY * deltaY;
-             p = (float) Math.sqrt(p);
-            Bullet bullet = new Bullet(player.getX() , player.getY() , deltaX / p , deltaY / p);
-            App.getCurrentGame().getBullets().add(bullet);
+            float length = (float) Math.sqrt(baseDeltaX * baseDeltaX + baseDeltaY * baseDeltaY);
+            float baseDirX = baseDeltaX / length;
+            float baseDirY = baseDeltaY / length;
+
+            int pelletCount = weapon.getProjectile();
+            float spreadAngle = 15f;
+            float angleStep = spreadAngle / (pelletCount - 1);
+            float startAngle = -spreadAngle / 2f;
+
+            for (int i = 0; i < pelletCount; i++) {
+                float currentAngle = startAngle + i * angleStep;
+
+                float angleRad = (float) Math.toRadians(currentAngle);
+
+                float cosAngle = (float) Math.cos(angleRad);
+                float sinAngle = (float) Math.sin(angleRad);
+
+                float pelletDirX = baseDirX * cosAngle - baseDirY * sinAngle;
+                float pelletDirY = baseDirX * sinAngle + baseDirY * cosAngle;
+
+                Bullet bullet = new Bullet(player.getX(), player.getY(), pelletDirX, pelletDirY);
+                App.getCurrentGame().getBullets().add(bullet);
+            }
+
             weapon.useAmmo();
             timeLastShot = 1f / weapon.getFireRate();
         }

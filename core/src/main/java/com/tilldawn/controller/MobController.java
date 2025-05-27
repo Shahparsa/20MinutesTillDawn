@@ -15,7 +15,7 @@ import java.util.Random;
 public class MobController {
     static Random random = new Random();
 
-    static {
+    {
         //Size -1900 <= x <= 1850 & -1350 <= y <= 1300
         int number = App.getCurrentGame().getNumberOfTree();
         while (number > 0) {
@@ -25,6 +25,7 @@ public class MobController {
             App.getCurrentGame().getEnemies().add(tree);
             number--;
         }
+        App.getCurrentGame().setNumberOfTree(0);
     }
 
     public void checkCollide(Enemy enemy){

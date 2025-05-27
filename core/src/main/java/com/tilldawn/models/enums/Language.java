@@ -15,6 +15,10 @@ public enum Language {
     SettingsMenu("Setting Menu", "Einstellungen Menü"),
     ProfileMenu("Profile Menu", "Profil Menü"),
     PreGameMenu("Pre Game Menu", "Spielvorbereitung"),
+    PauseMenu("Pause Menu", "Pausenmenü"),
+    YouWin("You Win", "Sie Gewinnen"),
+    YouLose("You Lose", "Du Verlierst"),
+    ChooseAbilities("Choose Abilities", "Wähle Fähigkeiten"),
 
     // Fields
     UserName("Username", "Benutzername"),
@@ -56,6 +60,10 @@ public enum Language {
     Cheats("Cheats", "Cheats"),
     Abilities("Abilities", "Fähigkeiten"),
     Keys("Keys", "Tasten"),
+    Resume("Resume", "Fortsetzen"),
+    SaveAndExit("Save&Exit", "Speichern&Beenden"),
+    GiveUp("GiveUp", "Aufgeben"),
+
 
     // KeyBinds
     Up("Up", "Hoch"),

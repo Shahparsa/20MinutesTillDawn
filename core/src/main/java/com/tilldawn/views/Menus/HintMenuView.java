@@ -2,7 +2,6 @@ package com.tilldawn.views.Menus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -10,14 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.tilldawn.Main;
 import com.tilldawn.controller.MenuControllers.HintMenuController;
-import com.tilldawn.controller.MenuControllers.ScoreBoardMenuController;
 import com.tilldawn.models.App;
 import com.tilldawn.models.GameAssetManager;
-import com.tilldawn.models.User;
-import com.tilldawn.models.enums.Abilities;
 import com.tilldawn.models.enums.Language;
-
-import java.util.ArrayList;
 
 public class HintMenuView implements Screen {
     private final HintMenuController controller;
@@ -61,7 +55,7 @@ public class HintMenuView implements Screen {
     private final String[] AbilitiesDescriptions = {
         com.tilldawn.models.enums.Abilities.VITALITY.getLanguage(),
         com.tilldawn.models.enums.Abilities.DAMAGER.getLanguage(),
-        com.tilldawn.models.enums.Abilities.PRECREASE.getLanguage(),
+        com.tilldawn.models.enums.Abilities.PROCREASE.getLanguage(),
         com.tilldawn.models.enums.Abilities.AMOCREASE.getLanguage(),
         com.tilldawn.models.enums.Abilities.SPEEDY.getLanguage()
     };

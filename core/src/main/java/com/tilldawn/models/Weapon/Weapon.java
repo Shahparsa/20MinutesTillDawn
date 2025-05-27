@@ -13,6 +13,7 @@ public class Weapon {
     private int maxAmmo;
     private int reloadTime;
     private int fireRate;
+    private int projectile;
 
 
     public Weapon(WeaponsType type) {
@@ -23,6 +24,7 @@ public class Weapon {
         this.ammo = type.getMaxAmmo();
         this.fireRate = type.getFireRate();
         this.texture = new Texture(type.getTexturePath());
+        this.projectile = type.getProjectile();
         this.sprite = new Sprite(texture);
     }
 
@@ -68,5 +70,21 @@ public class Weapon {
 
     public void setDamage(int damage) {
         this.damage = damage;
+    }
+
+    public int getProjectile() {
+        return projectile;
+    }
+
+    public void setProjectile(int projectile) {
+        this.projectile = projectile;
+    }
+
+    public void setAmmo(int ammo) {
+        this.ammo = ammo;
+    }
+
+    public void setMaxAmmo(int maxAmmo) {
+        this.maxAmmo = maxAmmo;
     }
 }

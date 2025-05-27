@@ -9,6 +9,7 @@ import com.tilldawn.models.Enemies.Enemy;
 import com.tilldawn.models.Weapon.Bullet;
 import com.tilldawn.models.enums.Abilities;
 import com.tilldawn.views.GameView;
+import com.tilldawn.views.Menus.EndMenuView;
 
 public class GameController {
     private GameView view;
@@ -26,7 +27,7 @@ public class GameController {
     public GameController() {
         player = App.getCurrentGame().getPlayer();
         playerController = new PlayerController(App.getCurrentGame().getPlayer());
-        weaponController = new WeaponController(App.getCurrentGame().getWeapon() , player);
+        weaponController = new WeaponController(App.getCurrentGame().getWeapon(), player);
         bulletController = new BulletController();
         coinController = new CoinController();
         mobController = new MobController();
@@ -57,26 +58,26 @@ public class GameController {
         App.getCurrentGame().setEyeBatMonsterTime(App.getCurrentGame().getEyeBatMonsterTime() + delta);
 
         playerController.update(delta);
-        weaponController.update(delta , camera);
+        weaponController.update(delta, camera);
         bulletUpdater(delta);
         deleteBullet();
 
         // Mob
-        for(Enemy enemy : App.getCurrentGame().getEnemies()){
-            mobController.update(delta , enemy);
+        for (Enemy enemy : App.getCurrentGame().getEnemies()) {
+            mobController.update(delta, enemy);
             mobController.checkCollide(enemy);
         }
         deleteEnemies();
-        if(App.getCurrentGame().getTentacleMonsterTime() > 3){
-            for(int i = 0 ; i <= (int) App.getCurrentGame().getRealTime() / 30 ; i++){
+        if (App.getCurrentGame().getTentacleMonsterTime() > 3) {
+            for (int i = 0; i <= (int) App.getCurrentGame().getRealTime() / 30; i++) {
                 mobController.createTentacleMonster();
             }
             App.getCurrentGame().setTentacleMonsterTime(0);
         }
-        if(App.getCurrentGame().getRealTime() >= App.getCurrentGame().getFullTime() / 4){
-            if(App.getCurrentGame().getEyeBatMonsterTime() > 10){
-                float amount = 4*App.getCurrentGame().getRealTime() - App.getCurrentGame().getFullTime() + 30;
-                for(int i = 0 ; i <= (int) amount / 30 ; i++){
+        if (App.getCurrentGame().getRealTime() >= App.getCurrentGame().getFullTime() / 4) {
+            if (App.getCurrentGame().getEyeBatMonsterTime() > 10) {
+                float amount = 4 * App.getCurrentGame().getRealTime() - App.getCurrentGame().getFullTime() + 30;
+                for (int i = 0; i <= (int) amount / 30; i++) {
                     mobController.createEyeBatMonster();
                 }
                 App.getCurrentGame().setEyeBatMonsterTime(0);
@@ -84,7 +85,7 @@ public class GameController {
         }
 
         //Coin
-        for(Coin coin : App.getCurrentGame().getCoins()){
+        for (Coin coin : App.getCurrentGame().getCoins()) {
             coinController.checkCollide(coin);
             coinController.render(coin);
         }
@@ -93,38 +94,36 @@ public class GameController {
     }
 
     private void bulletUpdater(float delta) {
-        for(Bullet bullet : App.getCurrentGame().getBullets()) {
+        for (Bullet bullet : App.getCurrentGame().getBullets()) {
             bulletController.update(bullet, delta);
             bulletController.checkCollide(bullet);
         }
     }
 
     private void deleteBullet() {
-        for(Bullet bullet : App.getCurrentGame().getDeletedBullets()) {
+        for (Bullet bullet : App.getCurrentGame().getDeletedBullets()) {
             bulletController.removeNow(bullet);
         }
         App.getCurrentGame().resetDeletedBullets();
     }
 
     private void deleteEnemies() {
-        for(Enemy enemy : App.getCurrentGame().getDeletedEnemies()) {
+        for (Enemy enemy : App.getCurrentGame().getDeletedEnemies()) {
             mobController.removeNow(enemy);
         }
         App.getCurrentGame().resetDeletedEnemies();
     }
 
-    private void deleteCoins(){
-        for(Coin coin : App.getCurrentGame().getDeletedCoins()) {
+    private void deleteCoins() {
+        for (Coin coin : App.getCurrentGame().getDeletedCoins()) {
             coinController.removeNow(coin);
         }
         App.getCurrentGame().resetDeletedCoins();
     }
 
-    private void updateBackGround(){
-//        float backgroundY = Gdx.graphics.getHeight() / 2f ;
-//        float backgroundX = Gdx.graphics.getWidth() / 2f ;
-        float backgroundX = GameAssetManager.getInstance().getBackgroundTexture().getWidth()/2f;
-        float backgroundY = GameAssetManager.getInstance().getBackgroundTexture().getHeight()/2f;
+    private void updateBackGround() {
+        float backgroundX = GameAssetManager.getInstance().getBackgroundTexture().getWidth() / 2f;
+        float backgroundY = GameAssetManager.getInstance().getBackgroundTexture().getHeight() / 2f;
         backgroundX *= -1;
         backgroundY *= -1;
         Main.getBatch().draw(GameAssetManager.getInstance().getBackgroundTexture(), backgroundX, backgroundY);
@@ -137,6 +136,12 @@ public class GameController {
 
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public void handleEndGame(boolean mode) {
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new EndMenuView(mode , view
+            , GameAssetManager.getInstance().getSkin()));
     }
 
 }

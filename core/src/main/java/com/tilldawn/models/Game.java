@@ -16,7 +16,9 @@ public class Game {
     private float realTime = 0;
     private float tentacleMonsterTime = 0;
     private float eyeBatMonsterTime = 0;
-    private float lastTimeDamage = 0;
+    private float invincibleTime = 0;
+    private float doubleDamageTime = 0;
+    private float doubleSpeedTime = 0;
 
     // World things
     private ArrayList<Enemy> enemies = new ArrayList<>();
@@ -31,6 +33,14 @@ public class Game {
 
     //Aim
     private boolean aimBot = false;
+
+    //Ability
+    private int VitalityNumber = 0;
+    private int DamagerNumber = 0;
+    private int ProCreaseNumber = 0;
+    private int AmoCreaseNumber = 0;
+    private int SpeedyNumber = 0;
+
 
     public Game(float time, Hero hero, Player player, Weapon weapon) {
         this.fullTime = time;
@@ -95,10 +105,6 @@ public class Game {
         this.eyeBatMonsterTime = eyeBatMonsterTime;
     }
 
-    public float getLastTimeDamage() {
-        return lastTimeDamage;
-    }
-
     public ArrayList<Bullet> getDeletedBullets() {
         return deletedBullets;
     }
@@ -130,4 +136,73 @@ public class Game {
     public void resetDeletedCoins() {
         deletedCoins = new ArrayList<>();
     }
+
+    public int getVitalityNumber() {
+        return VitalityNumber;
+    }
+
+    public int getDamagerNumber() {
+        return DamagerNumber;
+    }
+
+    public int getProCreaseNumber() {
+        return ProCreaseNumber;
+    }
+
+    public int getAmoCreaseNumber() {
+        return AmoCreaseNumber;
+    }
+
+    public int getSpeedyNumber() {
+        return SpeedyNumber;
+    }
+
+    public void setNumberOfTree(int numberOfTree) {
+        this.numberOfTree = numberOfTree;
+    }
+
+    public float getInvincibleTime() {
+        return invincibleTime;
+    }
+
+    public void setInvincibleTime(float invincibleTime) {
+        this.invincibleTime = invincibleTime;
+    }
+
+    public void setVitalityNumber(int vitalityNumber) {
+        VitalityNumber = vitalityNumber;
+    }
+
+    public void setDamagerNumber(int damagerNumber) {
+        DamagerNumber = damagerNumber;
+    }
+
+    public void setProCreaseNumber(int proCreaseNumber) {
+        ProCreaseNumber = proCreaseNumber;
+    }
+
+    public void setAmoCreaseNumber(int amoCreaseNumber) {
+        AmoCreaseNumber = amoCreaseNumber;
+    }
+
+    public void setSpeedyNumber(int speedyNumber) {
+        SpeedyNumber = speedyNumber;
+    }
+
+    public float getDoubleSpeedTime() {
+        return doubleSpeedTime;
+    }
+
+    public void setDoubleSpeedTime(float doubleSpeedTime) {
+        this.doubleSpeedTime = doubleSpeedTime;
+    }
+
+    public float getDoubleDamageTime() {
+        return doubleDamageTime;
+    }
+
+    public void setDoubleDamageTime(float doubleDamageTime) {
+        this.doubleDamageTime = doubleDamageTime;
+    }
+
 }

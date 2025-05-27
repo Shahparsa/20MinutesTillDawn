@@ -15,9 +15,14 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Main;
 import com.tilldawn.controller.GameController;
+import com.tilldawn.controller.MenuControllers.MainMenuController;
+import com.tilldawn.controller.MenuControllers.PauseMenuController;
 import com.tilldawn.models.App;
+import com.tilldawn.models.GameAssetManager;
 import com.tilldawn.models.Player;
 import com.tilldawn.models.Weapon.Bullet;
+import com.tilldawn.views.Menus.MainMenuView;
+import com.tilldawn.views.Menus.PauseMenuView;
 
 public class GameView implements Screen, InputProcessor {
     private final OrthographicCamera camera;
@@ -114,6 +119,17 @@ public class GameView implements Screen, InputProcessor {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
+        if(Gdx.input.isKeyJustPressed(App.getPauseMenu())){
+            Main.getMain().getScreen().dispose();
+            Main.getMain().setScreen(new PauseMenuView(new PauseMenuController() , this
+                , GameAssetManager.getInstance().getSkin()));
+        }
+        if(App.getCurrentGame().getPlayer().getHp() <= 0){
+            controller.handleEndGame(false);
+        }
+        if(App.getCurrentGame().getFullTime() * 60 <= App.getCurrentGame().getRealTime()){
+            controller.handleEndGame(true);
+        }
         float heroX = controller.getPlayer().getX();
         float heroY = controller.getPlayer().getY();
         camera.position.set(heroX, heroY, 0);
