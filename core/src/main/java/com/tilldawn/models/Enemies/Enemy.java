@@ -20,12 +20,20 @@ public abstract class Enemy {
     protected float explosionTime = 0;
     protected float speed;
 
-    protected int damage = 1;
+    protected int damage;
     protected int hp;
     protected CollisionRect collisionRect;
 
     protected boolean isDying = false;
     protected boolean isDead = false;
+
+    Enemy(float x, float y, int hp, int damage , int speed) {
+        this.x = x;
+        this.y = y;
+        this.hp = hp;
+        this.speed = speed;
+        this.damage = damage;
+    }
 
     public Sprite getSprite() {
         return sprite;

@@ -3,8 +3,6 @@ package com.tilldawn.models;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.tilldawn.Main;
 import com.tilldawn.models.enums.Heroes.HeroesType;
 
@@ -39,25 +37,8 @@ public class App {
     private static int pauseMenu = Input.Keys.ESCAPE;
     //Hero selection
     private static HeroesType hero = null;
-    // Shader
-    private static ShaderProgram grayscaleShader;
 
 
-//    public static void initShaders() {
-//        if (grayscaleShader == null) {
-//            String vertexShader = Gdx.files.internal("shaders/default.vert").readString();
-//            String fragmentShader = Gdx.files.internal("shaders/grayscale.frag").readString();
-//            grayscaleShader = new ShaderProgram(vertexShader, fragmentShader);
-//
-//            if (!grayscaleShader.isCompiled()) {
-//                Gdx.app.error("Shader", grayscaleShader.getLog());
-//            }
-//        }
-//    }
-
-    public static ShaderProgram getGrayscaleShader() {
-        return grayscaleShader;
-    }
 
     public static ArrayList<User> getUsers() {
         return users;
@@ -257,5 +238,17 @@ public class App {
         return pauseMenu;
     }
 
+    public static float getDistance(float x, float y) {
+        Player player = App.getCurrentGame().getPlayer();
+        float deltax = x - player.getX();
+        float deltay = y - player.getY();
+        if (deltay < 0) {
+            deltay *= -1;
+        }
+        if (deltax < 0) {
+            deltax *= -1;
+        }
+        return deltax + deltay;
+    }
 
 }

@@ -9,11 +9,9 @@ import com.tilldawn.models.Player;
 
 public class CoinController {
     private Player player;
-    private Game game;
 
     public CoinController() {
         this.player = App.getCurrentGame().getPlayer();
-        this.game = App.getCurrentGame();
     }
 
     public void removeNow(Coin coin) {
@@ -22,9 +20,7 @@ public class CoinController {
 
     public void checkCollide(Coin coin) {
         if(coin.getCollisionRect().collidesWith(player.getCollisionRect())) {
-            if(player.addXp(3)){
-                //TODO : Animation
-            }
+            player.addXp(3);
             App.getCurrentGame().getDeletedCoins().add(coin);
         }
     }

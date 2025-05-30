@@ -21,16 +21,11 @@ public class Tree extends Enemy {
     }
 
     public Tree(float x, float y) {
+        super(x , y , -1 , 1 , 0);
         Texture texture = new Texture("Enemies/Tree/T_TreeMonster_0.png");
-        this.x = x;
-        this.y = y;
-        this.damage = 1;
-        this.hp = -1;
-        this.collisionRect = new CollisionRect(x , y , texture.getWidth()*2 , texture.getHeight()*2);
+        this.collisionRect = new CollisionRect(x , y , texture.getWidth() , texture.getHeight());
         this.sprite = new Sprite(texture);
-        this.speed = 0;
         this.sprite.setSize(texture.getWidth()*2 , texture.getHeight()*2);
-        sprite.setSize(texture.getWidth()*2, texture.getHeight()*2);
     }
 
 }

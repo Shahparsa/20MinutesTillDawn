@@ -51,7 +51,11 @@ public class ScoreBoardMenuController {
                 message.append(users.get(i).getUsername()).append(" - ");
                 message.append(users.get(i).getScore()).append(" - ");
                 message.append(users.get(i).getKills()).append(" - ");
-                message.append(String.format("%.2f" , users.get(i).getTimeAlive()));
+                float time = users.get(i).getTimeAlive();
+                int minutes = (int) (time / 60);
+                int seconds = (int) (time % 60);
+                String formattedTime = String.format("%02d:%02d", minutes, seconds);
+                message.append(formattedTime);
                 view.setRowLabels(i, message.toString());
             }
         }

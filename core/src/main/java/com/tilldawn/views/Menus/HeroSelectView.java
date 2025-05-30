@@ -135,9 +135,6 @@ public class HeroSelectView implements Screen {
         }
     }
 
-    public TextButton getBackButton() {
-        return backButton;
-    }
 
     private void addListener(){
         backButton.addListener(new ClickListener() {

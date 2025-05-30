@@ -1,12 +1,12 @@
 package com.tilldawn.controller;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tilldawn.Main;
 import com.tilldawn.models.App;
 import com.tilldawn.models.Coin;
 import com.tilldawn.models.Enemies.*;
+import com.tilldawn.models.GameAssetManager;
 import com.tilldawn.models.Player;
 import com.tilldawn.models.Weapon.Bullet;
 
@@ -16,7 +16,6 @@ public class MobController {
     static Random random = new Random();
 
     {
-        //Size -1900 <= x <= 1850 & -1350 <= y <= 1300
         int number = App.getCurrentGame().getNumberOfTree();
         while (number > 0) {
             float x = random.nextFloat(1850 + 1900) - 1900;
@@ -31,8 +30,11 @@ public class MobController {
     public void checkCollide(Enemy enemy){
         Player player = App.getCurrentGame().getPlayer();
         if(enemy.getCollisionRect().collidesWith(player.getCollisionRect())){
-            player.setHp(player.getHp() - enemy.getDamage());
-            // TODO : Animation
+            if(App.getCurrentGame().getInvincibleTime() <= 0) {
+                player.setHp(player.getHp() - enemy.getDamage());
+                GameAssetManager.getInstance().getHitSFX().play();
+                App.getCurrentGame().setInvincibleTime(5);
+            }
         }
     }
 
@@ -48,6 +50,11 @@ public class MobController {
         float y = random.nextFloat(1300 + 1350) - 1350;
         EyeBat eyeBat = new EyeBat(x, y);
         App.getCurrentGame().getEnemies().add(eyeBat);
+    }
+
+    public void createElderBoss(){
+        Elder elder = new Elder(1850 , 1300);
+        App.getCurrentGame().getEnemies().add(elder);
     }
 
     public void update(float delta, Enemy enemy) {
@@ -78,9 +85,10 @@ public class MobController {
                 updateAnimation(delta, tentacleMonster);
                 renderMob(tentacleMonster);
             } else if (enemy instanceof Elder) {
-
-            } else if (enemy instanceof ShubNiggurath) {
-
+                Elder elder = (Elder) enemy;
+                updatePosElder(delta , elder);
+                updateAnimation(delta, elder);
+                renderMob(elder);
             }
         }
     }
@@ -96,36 +104,23 @@ public class MobController {
     }
 
     private void updatePosMob(float delta, Enemy enemy) {
-        float realDistance = getDistance(enemy.getX(), enemy.getY());
+        float realDistance = App.getDistance(enemy.getX(), enemy.getY());
         int newX = 0;
         int newY = 0;
         for (int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++) {
-                float newDistance = getDistance(enemy.getX() + i, enemy.getY() + j);
+                float newDistance = App.getDistance(enemy.getX() + i, enemy.getY() + j);
                 if (newDistance < realDistance) {
                     newX = i;
                     newY = j;
                     realDistance = newDistance;
                 }
             }
-            enemy.setX(enemy.getX() + newX * delta * enemy.getSpeed());
-            enemy.setY(enemy.getY() + newY * delta * enemy.getSpeed());
-            enemy.getCollisionRect().setX(enemy.getX());
-            enemy.getCollisionRect().setY(enemy.getY());
         }
-    }
-
-    private float getDistance(float x, float y) {
-        Player player = App.getCurrentGame().getPlayer();
-        float dx = x - player.getX();
-        float dy = y - player.getY();
-        if (dy < 0) {
-            dy *= -1;
-        }
-        if (dx < 0) {
-            dx *= -1;
-        }
-        return dx + dy;
+        enemy.setX(enemy.getX() + newX * delta * enemy.getSpeed());
+        enemy.setY(enemy.getY() + newY * delta * enemy.getSpeed());
+        enemy.getCollisionRect().setX(enemy.getX());
+        enemy.getCollisionRect().setY(enemy.getY());
     }
 
     private void updateAnimation(float delta, Enemy enemy) {
@@ -175,5 +170,19 @@ public class MobController {
 
     public void removeNow(Enemy enemy) {
         App.getCurrentGame().getEnemies().remove(enemy);
+    }
+
+    public void updatePosElder(float delta , Elder elder) {
+        elder.setDashTimer(elder.getDashTimer() + delta);
+        if(elder.getDashTimer() >= 2){
+            elder.setDashing(false);
+        }
+        if(elder.getDashTimer() >= elder.getDashMax()){
+            elder.setDashing(true);
+            elder.setDashTimer(0);
+        }
+        if(elder.isDashing()){
+            updatePosMob(delta, elder);
+        }
     }
 }

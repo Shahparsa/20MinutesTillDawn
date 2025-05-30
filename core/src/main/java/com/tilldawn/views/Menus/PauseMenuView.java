@@ -59,20 +59,27 @@ public class PauseMenuView implements Screen {
         for(int i = 0 ; i < 5 ; i++){
             cheatsLabel[i] = new Label(cheats[i] , skin);
         }
+        if(App.getCurrentGame().getDoubleSpeedTime() <= 0){
+            App.getCurrentGame().setDoubleSpeedTime(0);
+        }
+        if(App.getCurrentGame().getDoubleDamageTime() <= 0){
+            App.getCurrentGame().setDoubleDamageTime(0);
+        }
         numberOfAmoCreaseLabel = new Label(Language.AmoCrease.getLanguage() + " : "
             + App.getCurrentGame().getAmoCreaseNumber(), skin);
         numberOfVitalityLabel = new Label(Language.Vitality.getLanguage() + " : "
             + App.getCurrentGame().getVitalityNumber(), skin);
+        String damageTime = String.format("%.01f" , App.getCurrentGame().getDoubleDamageTime());
         numberOfDamagersLabel = new Label(Language.Damager.getLanguage() + " : "
-            + App.getCurrentGame().getDamagerNumber(), skin);
+            + damageTime, skin);
         numberOfProCreaseLabel = new Label(Language.ProCrease.getLanguage() + " : "
             + App.getCurrentGame().getProCreaseNumber(), skin);
+        String speedTime = String.format("%.01f", App.getCurrentGame().getDoubleSpeedTime());
         numberOfSpeedyLabel = new Label(Language.Speedy.getLanguage() + " : "
-            + App.getCurrentGame().getSpeedyNumber(), skin);
+            + speedTime, skin);
         blackAndWhiteCheckBox = new CheckBox(Language.BlackAndWhite.getLanguage(), skin);
         addListener();
         controller.setView(this , view);
-
     }
 
     @Override

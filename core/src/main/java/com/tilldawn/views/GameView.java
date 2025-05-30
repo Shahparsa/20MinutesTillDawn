@@ -62,7 +62,7 @@ public class GameView implements Screen, InputProcessor {
         fakeLabel = new Label("", skin);
         Player player = App.getCurrentGame().getPlayer();
         xpLevelProgressBar = new ProgressBar(0, player.getLevel() * 20, 1, false, skin);
-        xpLevelProgressBar.setColor(Color.GREEN);
+        xpLevelProgressBar.setColor(Color.RED);
 
         glowTexture = new Texture(Gdx.files.internal("hale.png"));
         glowSprite = new Sprite(new TextureRegion(glowTexture));
@@ -140,6 +140,7 @@ public class GameView implements Screen, InputProcessor {
         Main.getBatch().begin();
 
         controller.updateGame(delta, camera);
+        controller.checkLevelUp(this);
         if (glowTexture != null) {
             glowSprite.setSize(Gdx.graphics.getWidth() + 100, Gdx.graphics.getHeight() + 100);
             glowSprite.setColor(glowColor);

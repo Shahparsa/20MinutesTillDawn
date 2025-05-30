@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tilldawn.models.CollisionRect;
 
-public class EyeBat extends Enemy{
-     {
+public class EyeBat extends Enemy {
+    {
         Texture frame1 = new Texture("Enemies/Eyebat/T_EyeBat_0.png");
         Texture frame2 = new Texture("Enemies/Eyebat/T_EyeBat_1.png");
         Texture frame3 = new Texture("Enemies/Eyebat/T_EyeBat_2.png");
@@ -24,16 +24,11 @@ public class EyeBat extends Enemy{
     private float shootTime = 0;
 
     public EyeBat(float x, float y) {
+        super(x, y, 50, 1, 10);
         Texture texture = new Texture("Enemies/Eyebat/T_EyeBat_0.png");
-        this.x = x;
-        this.y = y;
-        this.hp = 50;
-        this.damage = 1;
-        this.speed = 10;
         this.collisionRect = new CollisionRect(x, y, texture.getWidth() * 1.5f, texture.getHeight() * 1.5f);
         this.sprite = new Sprite(texture);
         this.sprite.setSize(texture.getWidth() * 1.5f, texture.getHeight() * 1.5f);
-        sprite.setSize(texture.getWidth() * 1.5f, texture.getHeight() * 1.5f);
     }
 
     public float getShootTime() {

@@ -18,6 +18,7 @@ import com.tilldawn.controller.MenuControllers.PreGameController;
 import com.tilldawn.models.App;
 import com.tilldawn.models.GameAssetManager;
 import com.tilldawn.models.enums.Language;
+import org.w3c.dom.Text;
 
 public class PreGameMenuView implements Screen {
     private final PreGameController controller;
@@ -144,7 +145,12 @@ public class PreGameMenuView implements Screen {
 
     @Override
     public void dispose() {
-
+        if (stage != null) {
+            stage.dispose();
+        }
+        for (Texture texture : heroTextures) {
+            texture.dispose();
+        }
     }
 
     public SelectBox<String> getWeaponSelectBox() {

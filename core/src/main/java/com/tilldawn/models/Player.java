@@ -21,9 +21,10 @@ public class Player{
 
     private int Xp = 0;
     private int level = 1;
+    private boolean levelUp = false;
 
 
-    public Player(Hero hero , Weapon weapon){
+    public Player(Hero hero){
         this.hero = hero;
         this.texture = new Texture(hero.getType().getIdle().getAnimationAddresses().get(0));
         this.sprite = new Sprite(texture);
@@ -37,16 +38,15 @@ public class Player{
     }
 
 
-    public boolean addXp(int xp){
+    public void addXp(int xp){
         // If return true it means level up
         int max = level * 20;
         Xp += xp;
         if (Xp >= max){
             level++;
             Xp -= max;
-            return true;
+            levelUp = true;
         }
-        return false;
     }
 
     public Hero getHero() {
@@ -128,5 +128,13 @@ public class Player{
 
     public CollisionRect getCollisionRect() {
         return collisionRect;
+    }
+
+    public boolean isLevelUp() {
+        return levelUp;
+    }
+
+    public void setLevelUp(boolean levelUp) {
+        this.levelUp = levelUp;
     }
 }

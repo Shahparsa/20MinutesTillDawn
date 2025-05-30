@@ -44,7 +44,7 @@ public class PreGameController {
             weapon = new Weapon(WeaponsType.Revolver);
         }
         Hero hero = new Hero(App.getHero());
-        Player player = new Player(hero , weapon);
+        Player player = new Player(hero);
 
         Game game = new Game(time , hero , player , weapon);
         App.setCurrentGame(game);

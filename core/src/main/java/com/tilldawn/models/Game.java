@@ -1,5 +1,6 @@
 package com.tilldawn.models;
 
+import com.tilldawn.models.Enemies.Elder;
 import com.tilldawn.models.Enemies.Enemy;
 import com.tilldawn.models.Weapon.Bullet;
 import com.tilldawn.models.Weapon.Weapon;
@@ -41,6 +42,12 @@ public class Game {
     private int AmoCreaseNumber = 0;
     private int SpeedyNumber = 0;
 
+    //Elder
+    private boolean isSpawned = false;
+
+    //Border
+    private Border border = new Border(5);
+    private boolean isActive = false;
 
     public Game(float time, Hero hero, Player player, Weapon weapon) {
         this.fullTime = time;
@@ -173,20 +180,12 @@ public class Game {
         VitalityNumber = vitalityNumber;
     }
 
-    public void setDamagerNumber(int damagerNumber) {
-        DamagerNumber = damagerNumber;
-    }
-
     public void setProCreaseNumber(int proCreaseNumber) {
         ProCreaseNumber = proCreaseNumber;
     }
 
     public void setAmoCreaseNumber(int amoCreaseNumber) {
         AmoCreaseNumber = amoCreaseNumber;
-    }
-
-    public void setSpeedyNumber(int speedyNumber) {
-        SpeedyNumber = speedyNumber;
     }
 
     public float getDoubleSpeedTime() {
@@ -205,4 +204,27 @@ public class Game {
         this.doubleDamageTime = doubleDamageTime;
     }
 
+    public boolean isSpawned() {
+        return isSpawned;
+    }
+
+    public void spawnElder(){
+        isSpawned = true;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public Border getBorder() {
+        return border;
+    }
+
+    public void setBorder(Border border) {
+        this.border = border;
+    }
 }

@@ -32,13 +32,16 @@ public class AbilityMenuController {
         if(abilities == Abilities.AMOCREASE){
             App.getCurrentGame().getWeapon().setMaxAmmo(App.getCurrentGame().getWeapon().getMaxAmmo() + 5);
             App.getCurrentGame().getWeapon().setAmmo(App.getCurrentGame().getWeapon().getAmmo() + 5);
+            App.getCurrentGame().setAmoCreaseNumber(App.getCurrentGame().getAmoCreaseNumber() + 1);
         }else if(abilities == Abilities.DAMAGER){
             App.getCurrentGame().setDoubleDamageTime(10);
         }else if(abilities == Abilities.PROCREASE){
             App.getCurrentGame().getWeapon().setProjectile(App.getCurrentGame().getWeapon().getProjectile() + 1);
+            App.getCurrentGame().setProCreaseNumber(App.getCurrentGame().getProCreaseNumber() + 1);
         }else if(abilities == Abilities.VITALITY){
             App.getCurrentGame().getPlayer().setMaxHp(App.getCurrentGame().getPlayer().getMaxHp() + 1);
             App.getCurrentGame().getPlayer().setHp(App.getCurrentGame().getPlayer().getHp() + 1);
+            App.getCurrentGame().setVitalityNumber(App.getCurrentGame().getVitalityNumber() + 1);
         }else if(abilities == Abilities.SPEEDY){
             App.getCurrentGame().setDoubleSpeedTime(10);
         }

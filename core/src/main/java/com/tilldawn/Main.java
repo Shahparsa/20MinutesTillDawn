@@ -32,20 +32,16 @@ public class Main extends Game {
 
     private void setCustomCursorFromTexture() {
         try {
-            // Load your cursor texture (place in assets folder)
             Texture cursorTexture = new Texture(Gdx.files.internal("MenuThings/T_Cursor.png"));
 
-            // Convert Texture to Pixmap (required by LibGDX cursor API)
             if (!cursorTexture.getTextureData().isPrepared()) {
                 cursorTexture.getTextureData().prepare();
             }
             Pixmap cursorPixmap = cursorTexture.getTextureData().consumePixmap();
 
-            // Create cursor (hotspot at 0,0 - change if needed)
             cursor = Gdx.graphics.newCursor(cursorPixmap, 0, 0);
             Gdx.graphics.setCursor(cursor);
 
-            // Clean up pixmap (texture remains in AssetManager)
             cursorPixmap.dispose();
         } catch (Exception e) {
             Gdx.app.error("Cursor", "Error loading custom cursor", e);

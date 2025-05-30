@@ -53,7 +53,11 @@ public class ScoreBoardMenuView implements Screen {
                 message.append(users.get(i).getUsername()).append(" - ");
                 message.append(users.get(i).getScore()).append(" - ");
                 message.append(users.get(i).getKills()).append(" - ");
-                message.append(String.format("%.2f", users.get(i).getTimeAlive()));
+                float time = users.get(i).getTimeAlive();
+                int minutes = (int) (time / 60);
+                int seconds = (int) (time % 60);
+                String formattedTime = String.format("%02d:%02d", minutes, seconds);
+                message.append(formattedTime);
                 rowLabels[i].setText(message.toString());
                 if (users.get(i).getUsername().equals(App.getCurrentUser().getUsername())) {
                     rowLabels[i].setColor(Color.GREEN);

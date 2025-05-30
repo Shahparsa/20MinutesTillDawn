@@ -15,8 +15,10 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Main;
 import com.tilldawn.controller.MenuControllers.MainMenuController;
 import com.tilldawn.controller.MenuControllers.PauseMenuController;
+import com.tilldawn.controller.PlayerController;
 import com.tilldawn.models.App;
 import com.tilldawn.models.GameAssetManager;
+import com.tilldawn.models.User;
 import com.tilldawn.models.enums.Language;
 import com.tilldawn.views.GameView;
 
@@ -44,16 +46,15 @@ public class EndMenuView implements Screen {
         }
         titleLabel.setFontScale(2.5f);
         nameLabel = new Label(App.getCurrentUser().getUsername(), skin);
-        timeLabel = new Label(Language.Time.getLanguage() + " : " + App.getCurrentGame().getRealTime(), skin);
+        float time = App.getCurrentGame().getRealTime();
+        int minutes = (int) (time / 60);
+        int seconds = (int) (time % 60);
+        String formattedTime = String.format("%02d:%02d", minutes, seconds);
+        timeLabel = new Label(Language.Time.getLanguage() + " : " + formattedTime, skin);
         killLabel = new Label(Language.Kill.getLanguage() + " : " + App.getCurrentGame().getPlayer().getKills(), skin);
         int point = ((int) App.getCurrentGame().getRealTime()) * App.getCurrentGame().getPlayer().getKills();
         pointsLabel = new Label(Language.Score.getLanguage() + " : " + point, skin);
-        App.getCurrentUser().setScore(App.getCurrentUser().getScore() + point);
-        if (App.getCurrentGame().getRealTime() > App.getCurrentUser().getTimeAlive()) {
-            App.getCurrentUser().setTimeAlive(App.getCurrentUser().getTimeAlive());
-        }
         backButton = new TextButton(Language.Back.getLanguage(), skin);
-
     }
 
     @Override
@@ -79,6 +80,7 @@ public class EndMenuView implements Screen {
         ScreenUtils.clear(0, 0, 0, 1);
         if (Gdx.input.isKeyJustPressed(App.getCheatAddHealth())) {
             App.getCurrentGame().getPlayer().setHp(1);
+            App.getCurrentGame().setInvincibleTime(5);
             backToGame();
         }
         Main.getBatch().begin();
@@ -118,12 +120,23 @@ public class EndMenuView implements Screen {
         Main.getMain().setScreen(gameView);
     }
 
+    private void updateThings(){
+        User user = App.getCurrentUser();
+        int point = ((int) App.getCurrentGame().getRealTime()) * App.getCurrentGame().getPlayer().getKills();
+        user.setScore(user.getScore() + point);
+        user.setKills(user.getKills() + App.getCurrentGame().getPlayer().getKills());
+        if(user.getTimeAlive() < App.getCurrentGame().getRealTime()){
+            user.setTimeAlive(App.getCurrentGame().getRealTime());
+        }
+    }
+
     private void addListeners() {
         backButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 if(App.isSFX()){
                     GameAssetManager.getInstance().getButtonSFX().play();
                 }
+                updateThings();
                 Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(new MainMenuView(new MainMenuController()
                     , GameAssetManager.getInstance().getSkin()));

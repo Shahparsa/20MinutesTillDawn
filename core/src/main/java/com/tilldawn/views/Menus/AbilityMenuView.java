@@ -57,22 +57,19 @@ public class AbilityMenuView implements Screen {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
-        table = GameAssetManager.getInstance().tableMenu(table , stage);
-
+        table = GameAssetManager.getInstance().tableMenu(new Table(), stage);
         table.setFillParent(true);
-        table.center();
 
-        table.add(titleLabel).pad(20);
+        table.add(titleLabel).pad(20).expandX().center();
         table.row();
+
         Table abilitiesTable = new Table();
-        abilitiesTable.setFillParent(true);
-        abilitiesTable.center();
         abilitiesTable.add(abilityButton1).pad(20);
         abilitiesTable.add(abilityButton2).pad(20);
         abilitiesTable.add(abilityButton3).pad(20);
+        table.add(abilitiesTable).pad(20).center();
 
-        table.add(abilitiesTable).pad(20);
-
+        addListener();
         stage.addActor(table);
     }
 

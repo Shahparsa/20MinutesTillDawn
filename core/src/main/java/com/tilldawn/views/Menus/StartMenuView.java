@@ -24,9 +24,6 @@ public class StartMenuView implements Screen {
     private final TextButton exitButton;
     private final Label gameTitle;
 
-    static {
-
-    }
 
     public StartMenuView(StartMenuController controller, Skin skin) {
         this.controller = controller;
