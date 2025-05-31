@@ -148,6 +148,7 @@ public class GameView implements Screen, InputProcessor {
             glowSprite.draw(Main.getBatch());
         }
         Main.getBatch().end();
+        controller.updateBorder(camera , delta);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.getBatch().setShader(Main.getBatch().getShader());
         stage.draw();

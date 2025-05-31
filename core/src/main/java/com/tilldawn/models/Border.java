@@ -22,13 +22,17 @@ public class Border {
     }
 
     public void update(float delta) {
-        if(!App.getCurrentGame().isActive()){
-            width = Math.max(200 , width - speed * delta * 2);
-            height = Math.max(100 , height - speed * delta * 2);
-            left += speed * delta;
-            bottom += speed * delta;
-            right = left + width;
-            top = bottom + height;
+        if(App.getCurrentGame().isActive()){
+            width = Math.max(1000 , width - speed * delta * 2);
+            height = Math.max(500 , height - speed * delta * 2);
+            if(width != 20){
+                left += speed * delta;
+                right = left + width;
+            }
+            if(height != 10){
+                bottom += speed * delta;
+                top = bottom + height;
+            }
         }
     }
 
@@ -59,4 +63,6 @@ public class Border {
     public float getRight() {
         return right;
     }
+
+
 }

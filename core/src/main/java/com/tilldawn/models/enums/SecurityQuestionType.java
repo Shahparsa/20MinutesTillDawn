@@ -15,7 +15,7 @@ public enum SecurityQuestionType {
         return question;
     }
 
-    public static SecurityQuestionType getSecurityfromQuestion(String Question) {
+    public static SecurityQuestionType getSecurityFromQuestion(String Question) {
         if(Question.equals("Pas misham?")){
             return Q1;
         }else if(Question.equals("What is your dad's name?")){

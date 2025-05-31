@@ -52,7 +52,8 @@ public class ProfileMenuView implements Screen {
         this.avatarChangeButton = new TextButton(Language.ChangeAvatar.getLanguage(), skin);
         this.errorLabel = new Label("" , skin);
         this.uploadButton = new TextButton(Language.Upload.getLanguage(), skin);
-        this.currentAvatar = new Image(App.getCurrentUser().getAvatar());
+        this.currentAvatar = new Image(new Texture(App.getCurrentUser().getAvatarPath()));
+//        this.currentAvatar = new Image(App.getCurrentUser().getAvatar());
         currentAvatar.setSize(250 , 250);
         this.imageSelectBox = new SelectBox<String>(skin);
         this.deleteButton = new TextButton(Language.DeleteAccount.getLanguage(), skin);

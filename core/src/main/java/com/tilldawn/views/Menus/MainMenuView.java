@@ -2,6 +2,7 @@ package com.tilldawn.views.Menus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -36,15 +37,6 @@ public class MainMenuView implements Screen {
     private final Label gameTitle;
     private final Image logoImage;
 
-    static {
-        App.addUsers(new User("Ali", "Ali123@",
-            new SecurityQuestion(SecurityQuestionType.Q1, "y"), null, null, 120, 10,
-            60));
-        App.addUsers(new User("Abbas", "Ali123@",
-            new SecurityQuestion(SecurityQuestionType.Q1, "y"), null, null, 190, 5,
-            90));
-    }
-
     public MainMenuView(MainMenuController controller , Skin skin) {
         this.controller = controller;
         settingsButton = new TextButton(Language.Setting.getLanguage(), skin);
@@ -55,7 +47,7 @@ public class MainMenuView implements Screen {
         loadGameButton = new TextButton(Language.loadGame.getLanguage(), skin);
         exitButton = new TextButton(Language.Exit.getLanguage(), skin);
         errorMessage = new Label("", skin);
-        avatarLabel =  new Image(App.getCurrentUser().getAvatar());
+        avatarLabel = new Image(new Texture(App.getCurrentUser().getAvatarPath()));
         avatarLabel.setSize(avatarLabel.getWidth(), avatarLabel.getHeight());
         usernameLabel = new Label(App.getCurrentUser().getUsername(), skin);
         scoreLabel = new Label(App.getCurrentUser().getScoreString(), skin);

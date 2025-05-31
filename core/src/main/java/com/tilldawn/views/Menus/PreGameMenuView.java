@@ -2,6 +2,7 @@ package com.tilldawn.views.Menus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -82,9 +83,10 @@ public class PreGameMenuView implements Screen {
     @Override
     public void show() {
         stage = new Stage(new ScreenViewport());
+        stateTime = 0;
         Gdx.input.setInputProcessor(stage);
 
-        table = GameAssetManager.getInstance().tableMenu(table , stage);
+        table = GameAssetManager.getInstance().tableMenu(table, stage);
         stateTime = 0f;
 
         table.setFillParent(true);
@@ -115,8 +117,16 @@ public class PreGameMenuView implements Screen {
         stateTime += delta;
 
         TextureRegion currentFrame = heroAnimation.getKeyFrame(stateTime, true);
+        Main.getBatch().setProjectionMatrix(
+            new OrthographicCamera(
+                Gdx.graphics.getWidth(),
+                Gdx.graphics.getHeight()
+            ).combined
+        );
         Main.getBatch().begin();
-        Main.getBatch().draw(currentFrame, 450, 450, heroTextures[0].getWidth() * 7, heroTextures[0].getHeight() * 7);
+        Main.getBatch().draw(currentFrame, -Gdx.graphics.getWidth() / 2f + 450,
+            -Gdx.graphics.getHeight() / 2f + 450, heroTextures[0].getWidth() * 7,
+            heroTextures[0].getHeight() * 7);
         Main.getBatch().end();
         stage.act(delta);
         stage.getBatch().setShader(Main.getBatch().getShader());
@@ -169,11 +179,11 @@ public class PreGameMenuView implements Screen {
         return backButton;
     }
 
-    private void addListeners(){
+    private void addListeners() {
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(App.isSFX()){
+                if (App.isSFX()) {
                     GameAssetManager.getInstance().getButtonSFX().play();
                 }
                 controller.handleBackButton();
@@ -182,7 +192,7 @@ public class PreGameMenuView implements Screen {
         startButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(App.isSFX()){
+                if (App.isSFX()) {
                     GameAssetManager.getInstance().getButtonSFX().play();
                 }
                 controller.handleStartButton();

@@ -7,6 +7,7 @@ import com.tilldawn.Main;
 import com.tilldawn.controller.MenuControllers.AbilityMenuController;
 import com.tilldawn.controller.MenuControllers.HintMenuController;
 import com.tilldawn.models.*;
+import com.tilldawn.models.Enemies.Elder;
 import com.tilldawn.models.Enemies.Enemy;
 import com.tilldawn.models.Weapon.Bullet;
 import com.tilldawn.models.enums.Abilities;
@@ -65,7 +66,16 @@ public class GameController {
 
         updateBackGround();
         if(App.getCurrentGame().isActive()){
-            borderController.updateBorder(delta);
+            boolean isElderAlive = false;
+            for(Enemy enemy : App.getCurrentGame().getEnemies()){
+                if(enemy instanceof Elder){
+                    isElderAlive = true;
+                }
+            }
+            if(!isElderAlive){
+                App.getCurrentGame().setActive(false);
+                App.getCurrentGame().setBorder(new Border(40));
+            }
         }
 
         // Time
@@ -101,13 +111,12 @@ public class GameController {
                 App.getCurrentGame().setEyeBatMonsterTime(0);
             }
         }
-        if(App.getCurrentGame().getRealTime() >= App.getCurrentGame().getFullTime() * 60 / 2) {
+        if(App.getCurrentGame().getRealTime() >= App.getCurrentGame().getFullTime() * 60 / 2
+            || Gdx.input.isKeyJustPressed(App.getCheatSpawnBoss())) {
             if(!App.getCurrentGame().isSpawned()){
                 mobController.createElderBoss();
                 App.getCurrentGame().spawnElder();
                 App.getCurrentGame().setActive(true);
-                Border border = new Border(5);
-                App.getCurrentGame().setBorder(border);
             }
         }
 
@@ -192,7 +201,6 @@ public class GameController {
     }
 
     public void checkLevelUp(GameView gameView) {
-        // TODO : Animation
         Player player = App.getCurrentGame().getPlayer();
         if (player.isLevelUp()) {
             GameAssetManager.getInstance().getLevelUpSFx().play();
@@ -200,6 +208,12 @@ public class GameController {
             Main.getMain().setScreen(new AbilityMenuView(new AbilityMenuController()
                 , gameView, GameAssetManager.getInstance().getSkin()));
             player.setLevelUp(false);
+        }
+    }
+
+    public void updateBorder(Camera camera , float delta) {
+        if(App.getCurrentGame().isActive()){
+            borderController.updateBorder(camera , delta);
         }
     }
 }

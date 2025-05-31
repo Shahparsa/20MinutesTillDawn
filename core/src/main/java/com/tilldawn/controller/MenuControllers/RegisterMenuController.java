@@ -1,6 +1,7 @@
 package com.tilldawn.controller.MenuControllers;
 
 import com.tilldawn.Main;
+import com.tilldawn.database.DatabaseHelper;
 import com.tilldawn.models.*;
 import com.tilldawn.models.enums.Language;
 import com.tilldawn.models.enums.SecurityQuestionType;
@@ -32,15 +33,15 @@ public class RegisterMenuController {
             return;
         }
 
-        if(answer.isEmpty()){
+        if (answer.isEmpty()) {
             view.setErrorMessage(Language.NoAnswer.getLanguage());
             return;
         }
 
-        SecurityQuestionType questionType = SecurityQuestionType.getSecurityfromQuestion(securityQuestion);
+        SecurityQuestionType questionType = SecurityQuestionType.getSecurityFromQuestion(securityQuestion);
         SecurityQuestion securityQuestion1 = new SecurityQuestion(questionType, answer);
         User user = new User(username, password, securityQuestion1);
-        App.addUsers(user);
+        DatabaseHelper.registerUser(user);
         App.setCurrentUser(user);
         navigateToMainMenu();
     }
@@ -69,12 +70,12 @@ public class RegisterMenuController {
     }
 
     private boolean isUsernameUnique(String username) {
-        for (User user : App.getUsers()) {
-            if (user.getUsername().equals(username)) {
-                return false;
-            }
+        User user = DatabaseHelper.getUserByUsername(username);
+        if (user == null) {
+            return true;
+        } else {
+            return false;
         }
-        return true;
     }
 
     private boolean isPasswordValid(String password) {

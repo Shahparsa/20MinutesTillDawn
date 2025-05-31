@@ -46,8 +46,9 @@ public class Game {
     private boolean isSpawned = false;
 
     //Border
-    private Border border = new Border(5);
+    private Border border = new Border(40);
     private boolean isActive = false;
+
 
     public Game(float time, Hero hero, Player player, Weapon weapon) {
         this.fullTime = time;

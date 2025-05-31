@@ -16,6 +16,7 @@ import com.tilldawn.Main;
 import com.tilldawn.controller.MenuControllers.MainMenuController;
 import com.tilldawn.controller.MenuControllers.PauseMenuController;
 import com.tilldawn.controller.PlayerController;
+import com.tilldawn.database.DatabaseHelper;
 import com.tilldawn.models.App;
 import com.tilldawn.models.GameAssetManager;
 import com.tilldawn.models.User;
@@ -79,7 +80,7 @@ public class EndMenuView implements Screen {
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
         if (Gdx.input.isKeyJustPressed(App.getCheatAddHealth())) {
-            App.getCurrentGame().getPlayer().setHp(1);
+            App.getCurrentGame().getPlayer().setHp(App.getCurrentGame().getPlayer().getMaxHp());
             App.getCurrentGame().setInvincibleTime(5);
             backToGame();
         }
@@ -128,6 +129,8 @@ public class EndMenuView implements Screen {
         if(user.getTimeAlive() < App.getCurrentGame().getRealTime()){
             user.setTimeAlive(App.getCurrentGame().getRealTime());
         }
+        DatabaseHelper.updateUserStats(App.getCurrentUser().getUsername() , App.getCurrentUser().getScore()
+            , App.getCurrentUser().getKills(), App.getCurrentUser().getTimeAlive());
     }
 
     private void addListeners() {

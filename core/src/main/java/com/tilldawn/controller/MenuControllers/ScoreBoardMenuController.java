@@ -1,6 +1,7 @@
 package com.tilldawn.controller.MenuControllers;
 
 import com.tilldawn.Main;
+import com.tilldawn.database.DatabaseHelper;
 import com.tilldawn.models.App;
 import com.tilldawn.models.GameAssetManager;
 import com.tilldawn.models.User;
@@ -15,6 +16,7 @@ public class ScoreBoardMenuController {
     private ScoreBoardMenuView view;
     private String mode = Language.Score.getLanguage();
     public void setView(ScoreBoardMenuView view) {
+        DatabaseHelper.getAllUsers();
         this.view = view;
     }
 

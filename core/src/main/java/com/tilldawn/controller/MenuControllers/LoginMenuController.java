@@ -1,6 +1,7 @@
 package com.tilldawn.controller.MenuControllers;
 
 import com.tilldawn.Main;
+import com.tilldawn.database.DatabaseHelper;
 import com.tilldawn.models.App;
 import com.tilldawn.models.GameAssetManager;
 import com.tilldawn.models.User;
@@ -58,11 +59,7 @@ public class LoginMenuController {
     }
 
     private User findUserWithUsername(String username) {
-        for (User user : App.getUsers()) {
-            if (user.getUsername().equals(username)) {
-                return user;
-            }
-        }
-        return null;
+        User user = DatabaseHelper.getUserByUsername(username);
+        return user;
     }
 }

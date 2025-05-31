@@ -31,6 +31,7 @@ public class ScoreBoardMenuView implements Screen {
 
     public ScoreBoardMenuView(ScoreBoardMenuController controller, Skin skin) {
         this.controller = controller;
+        controller.setView(this);
         this.table = new Table();
         this.titleLabel = new Label(Language.ScoreBoardMenu.getLanguage(), skin);
         titleLabel.setColor(Color.RED);
@@ -67,7 +68,6 @@ public class ScoreBoardMenuView implements Screen {
         this.orderingLabel = new Label(Language.OrderingBy.getLanguage(), skin);
         this.backButton = new TextButton(Language.Back.getLanguage(), skin);
         addListeners();
-        controller.setView(this);
     }
 
     @Override

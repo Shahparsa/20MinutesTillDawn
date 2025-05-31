@@ -6,6 +6,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.tilldawn.Main;
+import com.tilldawn.database.DatabaseHelper;
 import com.tilldawn.models.App;
 import com.tilldawn.models.GameAssetManager;
 import com.tilldawn.models.User;
@@ -27,8 +28,7 @@ public class ProfileMenuController {
     }
 
     public void handleDeleteButton() {
-        User user = App.getCurrentUser();
-        App.getUsers().remove(user);
+        DatabaseHelper.deleteUser(App.getCurrentUser().getUsername());
         App.setCurrentUser(null);
         navigateToStartMenu();
     }
@@ -39,11 +39,8 @@ public class ProfileMenuController {
         String newAvatarPath = AvatarType.getAvatarByName(newAvatarName).getTexturePath();
         String currentAvatarPath = App.getCurrentUser().getAvatarPath();
 
-        App.getCurrentUser().setAvatar(newAvatarTexture);
-        App.getCurrentUser().setAvatarPath(newAvatarPath);
-        view.setCurrentAvatar(newAvatarTexture);
         if (!currentAvatarPath.equals(newAvatarPath)) {
-            App.getCurrentUser().setAvatar(newAvatarTexture);
+            DatabaseHelper.changeAvatar(App.getCurrentUser().getUsername(), newAvatarPath);
             App.getCurrentUser().setAvatarPath(newAvatarPath);
             view.setCurrentAvatar(newAvatarTexture);
         } else {
@@ -67,6 +64,7 @@ public class ProfileMenuController {
                 view.setErrorLabel(Language.UsernameIsAlreadyTaken.getLanguage());
                 return;
             } else {
+                DatabaseHelper.changeUsername(App.getCurrentUser().getUsername(), newName);
                 App.getCurrentUser().setUsername(newName);
             }
         }
@@ -75,6 +73,7 @@ public class ProfileMenuController {
                 view.setErrorLabel(Language.PasswordIsInvalid.getLanguage());
                 return;
             } else {
+                DatabaseHelper.changePassword(App.getCurrentUser().getUsername(), newPassword);
                 App.getCurrentUser().setPassword(newPassword);
             }
         }
@@ -101,8 +100,7 @@ public class ProfileMenuController {
 
     private void handleSelectedFile(FileHandle file , String filePath) {
         try {
-            Texture newAvatar = new Texture(file);
-            App.getCurrentUser().setAvatar(newAvatar);
+            DatabaseHelper.changeAvatar(App.getCurrentUser().getUsername(), filePath);
             App.getCurrentUser().setAvatarPath(filePath);
             view.setCurrentAvatar(new Texture(filePath));
             view.setErrorLabel("");
@@ -118,12 +116,12 @@ public class ProfileMenuController {
     }
 
     private boolean isUsernameUnique(String username) {
-        for (User user : App.getUsers()) {
-            if (user.getUsername().equals(username)) {
-                return false;
-            }
+        User user = DatabaseHelper.getUserByUsername(username);
+        if (user == null) {
+            return true;
+        } else {
+            return false;
         }
-        return true;
     }
 
     private boolean isPasswordValid(String password) {

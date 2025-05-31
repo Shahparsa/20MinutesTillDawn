@@ -8,7 +8,6 @@ public class User {
     private String username;
     private String password;
     private SecurityQuestion securityQuestion;
-    private Texture avatar;
     private String avatarPath;
     private int score;
     private int kills;
@@ -22,17 +21,15 @@ public class User {
         this.kills = 0;
         this.timeAlive = 0;
         this.avatarPath = AvatarType.getAvatarRandom().getTexturePath();
-        this.avatar = new Texture(avatarPath);
     }
 
-    public User(String username, String password, SecurityQuestion securityQuestion, String avatarPath, Texture avatar
+    public User(String username, String password, SecurityQuestion securityQuestion, String avatarPath
         , int score, int kills, float timeAlive) {
         this.username = username;
         this.password = password;
         this.securityQuestion = securityQuestion;
         this.score = score;
         this.avatarPath = avatarPath;
-        this.avatar = avatar;
         this.kills = kills;
         this.timeAlive = timeAlive;
     }
@@ -60,14 +57,6 @@ public class User {
 
     public void setSecurityQuestion(SecurityQuestion securityQuestion) {
         this.securityQuestion = securityQuestion;
-    }
-
-    public Texture getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(Texture avatar) {
-        this.avatar = avatar;
     }
 
     public String getScoreString() {

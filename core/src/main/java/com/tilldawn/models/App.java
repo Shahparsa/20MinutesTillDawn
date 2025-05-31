@@ -15,7 +15,7 @@ public class App {
     private static String language = "English";
     // Music
     private static Music currentMusic = null;
-    private static float musicVolume = 0.5f;
+    private static float musicVolume = 0f;
     private static String currentMusicPath = null;
     // Booleans
     private static boolean isSFX = true;
@@ -42,10 +42,6 @@ public class App {
 
     public static ArrayList<User> getUsers() {
         return users;
-    }
-
-    public static void addUsers(User user) {
-        users.add(user);
     }
 
     public static User getCurrentUser() {
@@ -251,4 +247,7 @@ public class App {
         return deltax + deltay;
     }
 
+    public static void setUsers(ArrayList<User> newUsers) {
+        users = newUsers;
+    }
 }

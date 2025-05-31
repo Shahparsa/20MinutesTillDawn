@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.tilldawn.controller.MenuControllers.StartMenuController;
+import com.tilldawn.database.DatabaseHelper;
 import com.tilldawn.models.App;
 import com.tilldawn.models.GameAssetManager;
 import com.tilldawn.models.enums.Musics;
@@ -23,6 +24,8 @@ public class Main extends Game {
     public void create() {
         main = this;
         batch = new SpriteBatch();
+
+        DatabaseHelper.createDatabase();
 
         setCustomCursorFromTexture();
         App.playMusic(Musics.Music1.getMusicPath());

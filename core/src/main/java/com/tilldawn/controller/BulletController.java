@@ -53,7 +53,7 @@ public class BulletController {
             if (App.getCurrentGame().getPlayer().getCollisionRect().collidesWith(bullet.getCollision())) {
                 if (bullet.isAvailable()) {
                     bullet.useBullet();
-                    if (App.getCurrentGame().getDoubleDamageTime() <= 0) {
+                    if (App.getCurrentGame().getInvincibleTime() <= 0) {
                         App.getCurrentGame().getPlayer().setHp(App.getCurrentGame().getPlayer().getHp() - bullet.getDamage());
                         GameAssetManager.getInstance().getHitSFX().play();
                         App.getCurrentGame().setInvincibleTime(1);

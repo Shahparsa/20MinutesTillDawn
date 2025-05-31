@@ -111,10 +111,7 @@ public class PlayerController {
             player.updateRec();
         }
         if (Gdx.input.isKeyJustPressed(App.getCheatAddDamage())) {
-//            if (cheatAddDamageTime <= 0) {
             App.getCurrentGame().getWeapon().setDamage(App.getCurrentGame().getWeapon().getDamage() + 1);
-//                cheatAddDamageTime = 2f;
-//            }
         }
         if (Gdx.input.isKeyJustPressed(App.getCheatAddLevel())) {
             int amount = App.getCurrentGame().getPlayer().getLevel() * 20;
@@ -125,7 +122,7 @@ public class PlayerController {
             App.getCurrentGame().setRealTime(App.getCurrentGame().getRealTime() + 60);
             isMoving = false;
         }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             App.getCurrentGame().changeAimBot();
             isMoving = false;
         }

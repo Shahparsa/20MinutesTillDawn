@@ -7,8 +7,9 @@ dependencies {
   api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
   api "com.badlogicgames.gdx:gdx:$gdxVersion"
   api "com.github.MrStahlfelge.gdx-websockets:core:$websocketVersion"
+  implementation 'org.xerial:sqlite-jdbc:3.36.0.3'
 
-  if(enableGraalNative == 'true') {
+  if (enableGraalNative == 'true') {
     implementation "io.github.berstanio:gdx-svmhelper-annotations:$graalHelperVersion"
   }
 }

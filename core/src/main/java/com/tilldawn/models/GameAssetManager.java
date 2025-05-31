@@ -26,8 +26,8 @@ public class GameAssetManager {
     private final Sound hitSFX = Gdx.audio.newSound(Gdx.files.internal("SFXs/Blood_Splash.wav"));
 
     //Size -1900 <= x <= 1850 & -1350 <= y <= 1300
-    private final float right = -1900;
-    private final float left = 1850;
+    private final float left= -1900;
+    private final float right = 1850;
     private final float top = 1300;
     private final float bottom = -1350;
 
