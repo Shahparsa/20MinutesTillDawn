@@ -63,6 +63,7 @@ public enum Language {
     Resume("Resume", "Fortsetzen"),
     SaveAndExit("Save&Exit", "Speichern&Beenden"),
     GiveUp("GiveUp", "Aufgeben"),
+    Level("Level", "Ebene"),
 
 
     // KeyBinds

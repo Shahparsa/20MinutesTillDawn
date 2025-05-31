@@ -21,6 +21,7 @@ import com.tilldawn.models.App;
 import com.tilldawn.models.GameAssetManager;
 import com.tilldawn.models.Player;
 import com.tilldawn.models.Weapon.Bullet;
+import com.tilldawn.models.enums.Language;
 import com.tilldawn.views.Menus.MainMenuView;
 import com.tilldawn.views.Menus.PauseMenuView;
 
@@ -54,10 +55,12 @@ public class GameView implements Screen, InputProcessor {
         Gdx.input.setInputProcessor(stage);
 
         hpLabel = new Label("HP: " + App.getCurrentGame().getPlayer().getHp(), skin);
-        timeLabel = new Label("Time: ", skin);
-        levelLabel = new Label("Level: " + App.getCurrentGame().getPlayer().getLevel(), skin);
+        timeLabel = new Label(Language.Time.getLanguage() + " : ", skin);
+        levelLabel = new Label(Language.Level.getLanguage() + " : " + App.getCurrentGame().getPlayer().getLevel()
+            , skin);
         xpLevelLabel = new Label("XP: " + App.getCurrentGame().getPlayer().getXp(), skin);
-        killLabel = new Label("Kill: " + App.getCurrentGame().getPlayer().getKills(), skin);
+        killLabel = new Label(Language.Kill.getLanguage() + " : " + App.getCurrentGame().getPlayer().getKills()
+            , skin);
         ammoLabel = new Label("" + App.getCurrentGame().getWeapon().getAmmo(), skin);
         fakeLabel = new Label("", skin);
         Player player = App.getCurrentGame().getPlayer();
@@ -119,15 +122,15 @@ public class GameView implements Screen, InputProcessor {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
-        if(Gdx.input.isKeyJustPressed(App.getPauseMenu())){
+        if (Gdx.input.isKeyJustPressed(App.getPauseMenu())) {
             Main.getMain().getScreen().dispose();
-            Main.getMain().setScreen(new PauseMenuView(new PauseMenuController() , this
+            Main.getMain().setScreen(new PauseMenuView(new PauseMenuController(), this
                 , GameAssetManager.getInstance().getSkin()));
         }
-        if(App.getCurrentGame().getPlayer().getHp() <= 0){
+        if (App.getCurrentGame().getPlayer().getHp() <= 0) {
             controller.handleEndGame(false);
         }
-        if(App.getCurrentGame().getFullTime() * 60 <= App.getCurrentGame().getRealTime()){
+        if (App.getCurrentGame().getFullTime() * 60 <= App.getCurrentGame().getRealTime()) {
             controller.handleEndGame(true);
         }
         float heroX = controller.getPlayer().getX();
@@ -148,7 +151,7 @@ public class GameView implements Screen, InputProcessor {
             glowSprite.draw(Main.getBatch());
         }
         Main.getBatch().end();
-        controller.updateBorder(camera , delta);
+        controller.updateBorder(camera, delta);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.getBatch().setShader(Main.getBatch().getShader());
         stage.draw();

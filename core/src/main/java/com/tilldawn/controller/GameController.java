@@ -11,6 +11,7 @@ import com.tilldawn.models.Enemies.Elder;
 import com.tilldawn.models.Enemies.Enemy;
 import com.tilldawn.models.Weapon.Bullet;
 import com.tilldawn.models.enums.Abilities;
+import com.tilldawn.models.enums.Language;
 import com.tilldawn.views.GameView;
 import com.tilldawn.views.Menus.AbilityMenuView;
 import com.tilldawn.views.Menus.EndMenuView;
@@ -51,14 +52,14 @@ public class GameController {
     public void updateGame(float delta, Camera camera) {
         view.getHpLabel().setText("Hp : " + player.getHp() + "/" + player.getMaxHp());
         view.getAmmoLabel().setText(App.getCurrentGame().getWeapon().getAmmo() + "/" + App.getCurrentGame().getWeapon().getMaxAmmo());
-        view.getKillLabel().setText("Kill: " + player.getKills());
-        view.getLevelLabel().setText("Level: " + player.getLevel());
+        view.getKillLabel().setText( Language.Kill.getLanguage() + " : " + player.getKills());
+        view.getLevelLabel().setText(Language.Level.getLanguage() + " : " + player.getLevel());
         view.getXpLevelLabel().setText("XP: " + player.getXp());
 
         float timeDiff = App.getCurrentGame().getFullTime() * 60 - App.getCurrentGame().getRealTime();
         int minutes = (int) (timeDiff / 60);
         int seconds = (int) (timeDiff % 60);
-        String formattedTime = String.format("Time: %02d:%02d", minutes, seconds);
+        String formattedTime = String.format(Language.Time.getLanguage() + " : %02d:%02d", minutes, seconds);
         view.getTimeLabel().setText(formattedTime);
 
         view.getXpLevelProgressBar().setRange(0, App.getCurrentGame().getPlayer().getLevel() * 20);
