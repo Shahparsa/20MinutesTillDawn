@@ -33,7 +33,6 @@ public class HeroSelectController {
                 App.setHero(HeroesType.Shana);
             }
         }
-        System.out.println(App.getHero().toString());
         navigatePreGameMenu();
     }
 
