@@ -15,7 +15,7 @@ public class App {
     private static String language = "English";
     // Music
     private static Music currentMusic = null;
-    private static float musicVolume = 0f;
+    private static float musicVolume = 0.5f;
     private static String currentMusicPath = null;
     // Booleans
     private static boolean isSFX = true;
